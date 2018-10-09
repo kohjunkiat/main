@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedBook.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.testutil.TypicalBooks.BENSON;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class XmlAdaptedBookTest {
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         XmlAdaptedBook person =
                 new XmlAdaptedBook(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
-        String expectedMessage = Isbn.ISBN_NUMBERS_CONSTRAINTS;
+        String expectedMessage = Isbn.MESSAGE_ISBN_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
@@ -72,7 +72,7 @@ public class XmlAdaptedBookTest {
     public void toModelType_invalidEmail_throwsIllegalValueException() {
         XmlAdaptedBook person =
                 new XmlAdaptedBook(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
-        String expectedMessage = Price.PRICE_CONSTRAINTS;
+        String expectedMessage = Price.MESSAGE_PRICE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

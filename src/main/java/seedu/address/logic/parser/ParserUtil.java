@@ -10,9 +10,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.book.Isbn;
-import seedu.address.model.book.Name;
 import seedu.address.model.book.Price;
 import seedu.address.model.book.Quantity;
+import seedu.address.model.book.Name;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -90,7 +90,7 @@ public class ParserUtil {
         requireNonNull(email);
         String trimmedEmail = email.trim();
         if (!Price.isValidPrice(trimmedEmail)) {
-            throw new ParseException(Price.PRICE_CONSTRAINTS);
+            throw new ParseException(Price.MESSAGE_PRICE_CONSTRAINTS);
         }
         return new Price(trimmedEmail);
     }

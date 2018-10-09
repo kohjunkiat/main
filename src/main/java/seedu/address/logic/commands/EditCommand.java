@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISBN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
 
@@ -20,15 +20,12 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.book.*;
 import seedu.address.model.book.Book;
-import seedu.address.model.book.Isbn;
-import seedu.address.model.book.Name;
-import seedu.address.model.book.Price;
-import seedu.address.model.book.Quantity;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing book in the inventory book.
+ * Edits the details of an existing book in the quantity book.
  */
 public class EditCommand extends Command {
 
@@ -39,12 +36,12 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_ID + "PHONE] "
+            + "[" + PREFIX_ISBN + "PHONE] "
             + "[" + PREFIX_PRICE + "EMAIL] "
             + "[" + PREFIX_QUANTITY + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_ID + "91234567 "
+            + PREFIX_ISBN + "91234567 "
             + PREFIX_PRICE + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_BOOK_SUCCESS = "Edited Book: %1$s";
@@ -76,7 +73,7 @@ public class EditCommand extends Command {
         }
 
         Book bookToEdit = lastShownList.get(index.getZeroBased());
-        Book editedBook = createEditedPerson(bookToEdit, editBookDescriptor);
+        Book editedBook = createEditedBook(bookToEdit, editBookDescriptor);
 
         if (!bookToEdit.isSameBook(editedBook) && model.hasBook(editedBook)) {
             throw new CommandException(MESSAGE_DUPLICATE_BOOK);
@@ -92,11 +89,11 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}
      * edited with {@code editBookDescriptor}.
      */
-    private static Book createEditedPerson(Book bookToEdit, EditBookDescriptor editBookDescriptor) {
+    private static Book createEditedBook(Book bookToEdit, EditBookDescriptor editBookDescriptor) {
         assert bookToEdit != null;
 
         Name updatedName = editBookDescriptor.getName().orElse(bookToEdit.getName());
-        Isbn updatedIsbn = editBookDescriptor.getIsbn().orElse(bookToEdit.getIsbn());
+        Isbn updatedIsbn = editBookDescriptor.getISBN().orElse(bookToEdit.getIsbn());
         Price updatedPrice = editBookDescriptor.getPrice().orElse(bookToEdit.getPrice());
         Quantity updatedQuantity = editBookDescriptor.getQuantity().orElse(bookToEdit.getQuantity());
         Set<Tag> updatedTags = editBookDescriptor.getTags().orElse(bookToEdit.getTags());
@@ -128,7 +125,7 @@ public class EditCommand extends Command {
      */
     public static class EditBookDescriptor {
         private Name name;
-        private Isbn isbn;
+        private Isbn ISBN;
         private Price price;
         private Quantity quantity;
         private Set<Tag> tags;
@@ -141,7 +138,7 @@ public class EditCommand extends Command {
          */
         public EditBookDescriptor(EditBookDescriptor toCopy) {
             setName(toCopy.name);
-            setIsbn(toCopy.isbn);
+            setISBN(toCopy.ISBN);
             setPrice(toCopy.price);
             setQuantity(toCopy.quantity);
             setTags(toCopy.tags);
@@ -151,7 +148,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, isbn, price, quantity, tags);
+            return CollectionUtil.isAnyNonNull(name, ISBN, price, quantity, tags);
         }
 
         public void setName(Name name) {
@@ -162,12 +159,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setIsbn(Isbn isbn) {
-            this.isbn = isbn;
+        public void setISBN(Isbn ISBN) {
+            this.ISBN = ISBN;
         }
 
-        public Optional<Isbn> getIsbn() {
-            return Optional.ofNullable(isbn);
+        public Optional<Isbn> getISBN() {
+            return Optional.ofNullable(ISBN);
         }
 
         public void setPrice(Price price) {
@@ -219,7 +216,7 @@ public class EditCommand extends Command {
             EditBookDescriptor e = (EditBookDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getIsbn().equals(e.getIsbn())
+                    && getISBN().equals(e.getISBN())
                     && getPrice().equals(e.getPrice())
                     && getQuantity().equals(e.getQuantity())
                     && getTags().equals(e.getTags());

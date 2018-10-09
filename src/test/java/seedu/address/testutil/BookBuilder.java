@@ -14,9 +14,9 @@ import seedu.address.model.util.SampleDataUtil;
 public class BookBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_ISBN = "8535525555";
-    public static final String DEFAULT_PRICE = "9.99";
-    public static final String DEFAULT_QUANTITY = "1";
+    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private Name name;
     private Isbn isbn;
@@ -26,9 +26,9 @@ public class BookBuilder {
 
     public BookBuilder() {
         name = new Name(DEFAULT_NAME);
-        isbn = new Isbn(DEFAULT_ISBN);
-        price = new Price(DEFAULT_PRICE);
-        quantity = new Quantity(DEFAULT_QUANTITY);
+        isbn = new Isbn(DEFAULT_PHONE);
+        price = new Price(DEFAULT_EMAIL);
+        quantity = new Quantity(DEFAULT_ADDRESS);
         tags = new HashSet<>();
     }
 
@@ -62,7 +62,7 @@ public class BookBuilder {
     /**
      * Sets the {@code Quantity} of the {@code Book} that we are building.
      */
-    public BookBuilder withQuantity(String address) {
+    public BookBuilder withAddress(String address) {
         this.quantity = new Quantity(address);
         return this;
     }
@@ -70,7 +70,7 @@ public class BookBuilder {
     /**
      * Sets the {@code Isbn} of the {@code Book} that we are building.
      */
-    public BookBuilder withIsbn(String phone) {
+    public BookBuilder withPhone(String phone) {
         this.isbn = new Isbn(phone);
         return this;
     }
@@ -78,7 +78,7 @@ public class BookBuilder {
     /**
      * Sets the {@code Price} of the {@code Book} that we are building.
      */
-    public BookBuilder withPrice(String email) {
+    public BookBuilder withEmail(String email) {
         this.price = new Price(email);
         return this;
     }
