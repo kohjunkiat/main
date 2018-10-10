@@ -49,10 +49,10 @@ public class XmlSerializableAddressBook {
         BookInventory bookInventory = new BookInventory();
         for (XmlAdaptedBook p : persons) {
             Book book = p.toModelType();
-            if (bookInventory.hasPerson(book)) {
+            if (bookInventory.hasBook(book)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            bookInventory.addPerson(book);
+            bookInventory.addBook(book);
         }
         return bookInventory;
     }

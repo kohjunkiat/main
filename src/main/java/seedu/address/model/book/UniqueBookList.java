@@ -77,7 +77,7 @@ public class UniqueBookList implements Iterable<Book> {
         }
     }
 
-    public void setPersons(UniqueBookList replacement) {
+    public void setBooks(UniqueBookList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -86,9 +86,9 @@ public class UniqueBookList implements Iterable<Book> {
      * Replaces the contents of this list with {@code books}.
      * {@code books} must not contain duplicate books.
      */
-    public void setPersons(List<Book> books) {
+    public void setBooks(List<Book> books) {
         requireAllNonNull(books);
-        if (!personsAreUnique(books)) {
+        if (!booksAreUnique(books)) {
             throw new DuplicateBookException();
         }
 
@@ -122,7 +122,7 @@ public class UniqueBookList implements Iterable<Book> {
     /**
      * Returns true if {@code books} contains only unique books.
      */
-    private boolean personsAreUnique(List<Book> books) {
+    private boolean booksAreUnique(List<Book> books) {
         for (int i = 0; i < books.size() - 1; i++) {
             for (int j = i + 1; j < books.size(); j++) {
                 if (books.get(i).isSameBook(books.get(j))) {

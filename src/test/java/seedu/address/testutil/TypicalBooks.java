@@ -65,7 +65,7 @@ public class TypicalBooks {
     public static BookInventory getTypicalAddressBook() {
         BookInventory ab = new BookInventory();
         for (Book book : getTypicalPersons()) {
-            ab.addPerson(book);
+            ab.addBook(book);
         }
         return ab;
     }

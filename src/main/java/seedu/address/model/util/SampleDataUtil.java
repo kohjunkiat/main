@@ -43,7 +43,7 @@ public class SampleDataUtil {
     public static ReadOnlyBookInventory getSampleAddressBook() {
         BookInventory sampleAb = new BookInventory();
         for (Book sampleBook : getSamplePersons()) {
-            sampleAb.addPerson(sampleBook);
+            sampleAb.addBook(sampleBook);
         }
         return sampleAb;
     }

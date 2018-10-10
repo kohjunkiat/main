@@ -24,7 +24,7 @@ public class BookInventoryBuilder {
      * Adds a new {@code Book} to the {@code BookInventory} that we are building.
      */
     public BookInventoryBuilder withPerson(Book book) {
-        bookInventory.addPerson(book);
+        bookInventory.addBook(book);
         return this;
     }
 

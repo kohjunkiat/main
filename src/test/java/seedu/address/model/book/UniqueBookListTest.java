@@ -142,7 +142,7 @@ public class UniqueBookListTest {
     @Test
     public void setPersons_nullUniquePersonList_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueBookList.setPersons((UniqueBookList) null);
+        uniqueBookList.setBooks((UniqueBookList) null);
     }
 
     @Test
@@ -150,21 +150,21 @@ public class UniqueBookListTest {
         uniqueBookList.add(ALICE);
         UniqueBookList expectedUniqueBookList = new UniqueBookList();
         expectedUniqueBookList.add(BOB);
-        uniqueBookList.setPersons(expectedUniqueBookList);
+        uniqueBookList.setBooks(expectedUniqueBookList);
         assertEquals(expectedUniqueBookList, uniqueBookList);
     }
 
     @Test
     public void setPersons_nullList_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        uniqueBookList.setPersons((List<Book>) null);
+        uniqueBookList.setBooks((List<Book>) null);
     }
 
     @Test
     public void setPersons_list_replacesOwnListWithProvidedList() {
         uniqueBookList.add(ALICE);
         List<Book> bookList = Collections.singletonList(BOB);
-        uniqueBookList.setPersons(bookList);
+        uniqueBookList.setBooks(bookList);
         UniqueBookList expectedUniqueBookList = new UniqueBookList();
         expectedUniqueBookList.add(BOB);
         assertEquals(expectedUniqueBookList, uniqueBookList);
@@ -174,7 +174,7 @@ public class UniqueBookListTest {
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
         List<Book> listWithDuplicateBooks = Arrays.asList(ALICE, ALICE);
         thrown.expect(DuplicateBookException.class);
-        uniqueBookList.setPersons(listWithDuplicateBooks);
+        uniqueBookList.setBooks(listWithDuplicateBooks);
     }
 
     @Test

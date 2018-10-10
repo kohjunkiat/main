@@ -59,18 +59,18 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean hasBook(Book book) {
         requireNonNull(book);
-        return versionedAddressBook.hasPerson(book);
+        return versionedAddressBook.hasBook(book);
     }
 
     @Override
     public void deleteBook(Book target) {
-        versionedAddressBook.removePerson(target);
+        versionedAddressBook.removeBook(target);
         indicateAddressBookChanged();
     }
 
     @Override
     public void addBook(Book book) {
-        versionedAddressBook.addPerson(book);
+        versionedAddressBook.addBook(book);
         updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
         indicateAddressBookChanged();
     }
@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateBook(Book target, Book editedBook) {
         requireAllNonNull(target, editedBook);
 
-        versionedAddressBook.updatePerson(target, editedBook);
+        versionedAddressBook.updateBook(target, editedBook);
         indicateAddressBookChanged();
     }
 

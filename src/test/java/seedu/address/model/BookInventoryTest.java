@@ -63,26 +63,26 @@ public class BookInventoryTest {
     @Test
     public void hasPerson_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        bookInventory.hasPerson(null);
+        bookInventory.hasBook(null);
     }
 
     @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(bookInventory.hasPerson(ALICE));
+        assertFalse(bookInventory.hasBook(ALICE));
     }
 
     @Test
     public void hasPerson_personInAddressBook_returnsTrue() {
-        bookInventory.addPerson(ALICE);
-        assertTrue(bookInventory.hasPerson(ALICE));
+        bookInventory.addBook(ALICE);
+        assertTrue(bookInventory.hasBook(ALICE));
     }
 
     @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        bookInventory.addPerson(ALICE);
+        bookInventory.addBook(ALICE);
         Book editedAlice = new BookBuilder(ALICE).withQuantity(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(bookInventory.hasPerson(editedAlice));
+        assertTrue(bookInventory.hasBook(editedAlice));
     }
 
     @Test
