@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
 
 import java.util.Collections;
@@ -17,8 +16,12 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.book.*;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.Cost;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.Name;
+import seedu.address.model.book.Price;
+import seedu.address.model.book.Quantity;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -87,10 +90,11 @@ public class StockCommand extends Command {
         Name updatedName = (bookToStock.getName());
         Isbn updatedIsbn = (bookToStock.getIsbn());
         Price updatedPrice = stockBookDescriptor.getPrice().orElse(bookToStock.getPrice());
-        Quantity updatedQuantity = bookToStock.IncreaseQuantity(stockBookDescriptor.getQuantity());
+        Cost updatedCost = bookToStock.getCost();
+        Quantity updatedQuantity = bookToStock.increaseQuantity(stockBookDescriptor.getQuantity());
         Set<Tag> updatedTags = (bookToStock.getTags());
 
-        return new Book(updatedName, updatedIsbn, updatedPrice, updatedQuantity, updatedTags);
+        return new Book(updatedName, updatedIsbn, updatedPrice, updatedCost, updatedQuantity, updatedTags);
     }
 
     @Override
@@ -117,8 +121,9 @@ public class StockCommand extends Command {
      */
     public static class StockBookDescriptor {
         private Name name;
-        private Isbn ISBN;
+        private Isbn isbn;
         private Price price;
+        private Cost cost;
         private Quantity quantity;
         private Set<Tag> tags;
 
@@ -130,8 +135,9 @@ public class StockCommand extends Command {
          */
         public StockBookDescriptor(StockBookDescriptor toCopy) {
             setName(toCopy.name);
-            setISBN(toCopy.ISBN);
+            setIsbn(toCopy.isbn);
             setPrice(toCopy.price);
+            setCost(toCopy.cost);
             setQuantity(toCopy.quantity);
             setTags(toCopy.tags);
         }
@@ -140,7 +146,7 @@ public class StockCommand extends Command {
          * Returns true if at least one field is stocked.
          */
         public boolean isAnyFieldStocked() {
-            return CollectionUtil.isAnyNonNull(name, ISBN, price, quantity, tags);
+            return CollectionUtil.isAnyNonNull(name, isbn, price, quantity, tags);
         }
 
         public void setName(Name name) {
@@ -151,12 +157,12 @@ public class StockCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setISBN(Isbn ISBN) {
-            this.ISBN = ISBN;
+        public void setIsbn(Isbn isbn) {
+            this.isbn = isbn;
         }
 
-        public Optional<Isbn> getISBN() {
-            return Optional.ofNullable(ISBN);
+        public Optional<Isbn> getIsbn() {
+            return Optional.ofNullable(isbn);
         }
 
         public void setPrice(Price price) {
@@ -165,6 +171,10 @@ public class StockCommand extends Command {
 
         public Optional<Price> getPrice() {
             return Optional.ofNullable(price);
+        }
+
+        public void setCost(Cost cost) {
+            this.cost = cost;
         }
 
         public void setQuantity(Quantity quantity) {
@@ -208,7 +218,7 @@ public class StockCommand extends Command {
             StockBookDescriptor e = (StockBookDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getISBN().equals(e.getISBN())
+                    && getIsbn().equals(e.getIsbn())
                     && getPrice().equals(e.getPrice())
                     && getQuantity().equals(e.getQuantity())
                     && getTags().equals(e.getTags());
