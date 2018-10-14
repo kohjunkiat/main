@@ -21,7 +21,6 @@ public class Statistic {
                 instance = new Statistic(this.revenue, month, volume, expense);
             }
             return instance;
-        }
     }
 
     public Revenue getRevenue() {return revenue;}
