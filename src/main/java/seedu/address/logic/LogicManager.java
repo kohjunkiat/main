@@ -16,6 +16,11 @@ import seedu.address.model.request.CommandSecondary;
 import seedu.address.model.request.Request;
 import seedu.address.model.request.RequestListParser;
 import seedu.address.model.request.RequestModel;
+import seedu.address.model.statistic.CommandStatistic;
+import seedu.address.model.statistic.StatisticModel;
+import seedu.address.model.statistic.StatisticParser;
+
+
 
 /**
  * The main LogicManager of the app.
@@ -25,22 +30,30 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final RequestModel requestModel;
+    private final StatisticModel statisticModel;
     private final CommandHistory history;
     private final BookInventoryParser bookInventoryParser;
     private final RequestListParser requestListParser;
+    private final StatisticParser statisticParser;
 
-    public LogicManager(Model model, RequestModel requestModel) {
+    public LogicManager(Model model, RequestModel requestModel, StatisticModel statisticModel) {
         this.model = model;
         this.requestModel = requestModel;
+        this.statisticModel = statisticModel;
         history = new CommandHistory();
         bookInventoryParser = new BookInventoryParser();
         requestListParser = new RequestListParser();
+        statisticParser = new StatisticParser();
     }
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
-        if (commandText.equals("viewrequests") || commandText.toLowerCase().contains("request")) {
+        if (commandText.equals("viewstatistics")) {
+            CommandStatistic command = statisticParser.parseCommandStatistic(commandText);
+            history.add(commandText);
+            return command.execute(statisticModel, history);
+        } else if (commandText.equals("viewrequests") || commandText.toLowerCase().contains("request")) {
             CommandSecondary command = requestListParser.parseCommandRequest(commandText);
             history.add(commandText);
             return command.execute(requestModel, history);

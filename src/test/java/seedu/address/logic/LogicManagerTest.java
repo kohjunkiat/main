@@ -18,6 +18,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.request.RequestModel;
 import seedu.address.model.request.RequestModelManager;
+import seedu.address.model.statistic.StatisticModel;
+import seedu.address.model.statistic.StatisticModelManager;
 
 
 public class LogicManagerTest {
@@ -26,7 +28,8 @@ public class LogicManagerTest {
 
     private Model model = new ModelManager();
     private RequestModel requestModel = new RequestModelManager();
-    private Logic logic = new LogicManager(model, requestModel);
+    private StatisticModel statisticModel = new StatisticModelManager();
+    private Logic logic = new LogicManager(model, requestModel, statisticModel);
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

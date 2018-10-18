@@ -16,6 +16,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.request.RequestModelManager;
+import seedu.address.model.statistic.StatisticModelManager;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -34,7 +35,7 @@ public class MainWindowCloseTest extends GuiUnitTest {
         FxToolkit.setupStage(stage -> {
             this.stage = stage;
             mainWindow = new MainWindow(stage, new Config(), new UserPrefs(), new LogicManager(
-                    new ModelManager(), new RequestModelManager()));
+                    new ModelManager(), new RequestModelManager(), new StatisticModelManager()));
             mainWindowHandle = new EmptyMainWindowHandle(stage);
 
             stage.setScene(mainWindow.getRoot().getScene());

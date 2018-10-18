@@ -16,6 +16,8 @@ import seedu.address.model.request.Email;
 import seedu.address.model.request.ReadOnlyRequests;
 import seedu.address.model.request.Request;
 import seedu.address.model.request.RequestList;
+import seedu.address.model.statistic.ReadOnlyStatistics;
+import seedu.address.model.statistic.Statistic;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -50,6 +52,11 @@ public class SampleDataUtil {
                     new Quantity("3")),
         };
     }
+
+    public static Statistic[] getSampleStatistics() {
+        return null;
+    }
+
     public static ReadOnlyBookInventory getSampleAddressBook() {
         BookInventory sampleAb = new BookInventory();
         for (Book sampleBook : getSamplePersons()) {
@@ -64,6 +71,10 @@ public class SampleDataUtil {
             requestAb.addRequest(sampleRequest);
         }
         return requestAb;
+    }
+
+    public static ReadOnlyStatistics getSampleStatisticList() {
+        return null;
     }
 
     /**

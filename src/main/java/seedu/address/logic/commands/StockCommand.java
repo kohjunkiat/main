@@ -22,6 +22,7 @@ import seedu.address.model.book.Isbn;
 import seedu.address.model.book.Name;
 import seedu.address.model.book.Price;
 import seedu.address.model.book.Quantity;
+import seedu.address.model.statistic.Statistic;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -73,6 +74,8 @@ public class StockCommand extends Command {
         if (!bookToStock.isSameBook(stockedBook) && model.hasBook(stockedBook)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
+
+
 
         model.updateBook(bookToStock, stockedBook);
         model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);

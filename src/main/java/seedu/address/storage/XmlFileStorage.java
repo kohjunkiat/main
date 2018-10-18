@@ -38,6 +38,16 @@ public class XmlFileStorage {
             throw new AssertionError("Unexpected exception " + e.getMessage(), e);
         }
     }
+
+    public static void saveStatisticToFile(Path file, XmlSerializableStatisticList statisticList)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, statisticList);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
+
     /**
      * Returns address book in the file or an empty address book
      */
@@ -57,6 +67,18 @@ public class XmlFileStorage {
             FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableRequestList.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
+    /**
+     * Returns statistic list in the file or an empty statistic list
+     */
+    public static XmlSerializableStatisticList loadStatisticsFromSaveFile(Path file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableStatisticList.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

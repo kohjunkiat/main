@@ -29,6 +29,10 @@ import seedu.address.model.request.ReadOnlyRequests;
 import seedu.address.model.request.RequestList;
 import seedu.address.model.request.RequestModel;
 import seedu.address.model.request.RequestModelManager;
+import seedu.address.model.statistic.ReadOnlyStatistics;
+import seedu.address.model.statistic.StatisticList;
+import seedu.address.model.statistic.StatisticModel;
+import seedu.address.model.statistic.StatisticModelManager;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.BookInventoryStorage;
 import seedu.address.storage.InventoryStorage;
@@ -37,9 +41,15 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.RequestListStorage;
 import seedu.address.storage.RequestListStorageManager;
 import seedu.address.storage.RequestStorage;
+import seedu.address.storage.StatisticListStorage;
+import seedu.address.storage.StatisticListStorageManager;
+import seedu.address.storage.StatisticStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlBookInventoryStorage;
 import seedu.address.storage.XmlRequestListStorage;
+import seedu.address.storage.XmlStatisticListStorage;
+
+
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -56,8 +66,10 @@ public class MainApp extends Application {
     protected Logic logic;
     protected InventoryStorage storage;
     protected RequestStorage requestStorage;
+    protected StatisticStorage statisticStorage;
     protected Model model;
     protected RequestModel requestModel;
+    protected StatisticModel statisticModel;
     protected Config config;
     protected UserPrefs userPrefs;
 
@@ -76,13 +88,16 @@ public class MainApp extends Application {
         RequestListStorage requestListStorage = new XmlRequestListStorage(userPrefs.getRequestListFilePath());
         requestStorage = new RequestListStorageManager(requestListStorage, userPrefsStorage);
         initLogging(config);
+        StatisticListStorage statisticListStorage = new XmlStatisticListStorage(userPrefs.getBookInventoryFilePath());
+        statisticStorage = new StatisticListStorageManager(statisticListStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
         requestModel = initModelManager(requestStorage, userPrefs);
 
+        statisticModel = initModelManager(statisticStorage, userPrefs);
 
-        logic = new LogicManager(model, requestModel);
+        logic = new LogicManager(model, requestModel, statisticModel);
 
         ui = new UiManager(logic, config, userPrefs);
 
@@ -138,6 +153,32 @@ public class MainApp extends Application {
         }
 
         return new RequestModelManager(initialData, userPrefs);
+    }
+
+    /**
+     * Returns a {@code StatisticequestModelManager} with the data from
+     * {@code requestStorage}'s request list and {@code userPrefs}. <br>
+     * The data from the sample request list will be used instead if {@code requestStorage}'s request list is not found,
+     * or an empty request list will be used instead if errors occur when reading {@code storage}'s request list.
+     */
+    private StatisticModel initModelManager(StatisticListStorage statisticStorage, UserPrefs userPrefs) {
+        Optional<ReadOnlyStatistics> statisticListOptional;
+        ReadOnlyStatistics initialData;
+        try {
+            statisticListOptional = statisticStorage.readStatisticList();
+            if (!statisticListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample BookInventory");
+            }
+            initialData = statisticListOptional.orElseGet(SampleDataUtil::getSampleStatisticList);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty BookInventory");
+            initialData = new StatisticList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty BookInventory");
+            initialData = new StatisticList();
+        }
+
+        return new StatisticModelManager(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {

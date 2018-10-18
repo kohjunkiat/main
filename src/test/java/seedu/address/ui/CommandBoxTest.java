@@ -16,6 +16,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.request.RequestModel;
 import seedu.address.model.request.RequestModelManager;
+import seedu.address.model.statistic.StatisticModel;
+import seedu.address.model.statistic.StatisticModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -31,7 +33,8 @@ public class CommandBoxTest extends GuiUnitTest {
     public void setUp() {
         Model model = new ModelManager();
         RequestModel requestModel = new RequestModelManager();
-        Logic logic = new LogicManager(model, requestModel);
+        StatisticModel statisticModel = new StatisticModelManager();
+        Logic logic = new LogicManager(model, requestModel, statisticModel);
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
